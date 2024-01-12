@@ -3,7 +3,7 @@ Catch Logger
 
 
 This project uses portions of the DECA tool by Krzysztof Kamieniecki (https://github.com/kk49/deca/tree/main).
-In accordance with the MIT license terms, it is provided below.
+In accordance with the MIT license terms, the DECA license is provided below.
 
 MIT License
 
