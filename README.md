@@ -1,6 +1,10 @@
 Catch Logger
 
+Run this command after cloning the repo for download all submodules!
 
+```
+git submodule update --init --recursive
+```
 
 This project uses portions of the DECA tool by Krzysztof Kamieniecki (https://github.com/kk49/deca/tree/main).
 In accordance with the MIT license terms, the DECA license is provided below.
