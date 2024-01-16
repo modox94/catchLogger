@@ -1,0 +1,3 @@
+[submodule "deca"]
+	path = deca
+	url = https://github.com/kk49/deca
