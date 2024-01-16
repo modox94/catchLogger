@@ -1,0 +1,24 @@
+body {
+  overflow: hidden;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+#dropzone {
+  border: 1px solid black;
+  flex-grow: 1;
+  overflow: scroll;
+  font-family: monospace;
+  white-space: pre;
+}
+
+#site-nav table,
+th,
+td {
+  border: 1px solid black;
+}

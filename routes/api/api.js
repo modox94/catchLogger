@@ -1,21 +1,37 @@
-// api.js
 const express = require("express");
+const { inflate } = require("pako");
+const { compareArray, adfProcess } = require("../../utils");
 const router = express.Router();
-const multer = require("multer");
 
+router.post("/upload", (req, res) => {
+  const resultObject = {};
+  const filesObject = req.files || {};
 
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+  for (const fullPath in filesObject) {
+    if (Object.hasOwnProperty.call(filesObject, fullPath)) {
+      const file = filesObject[fullPath];
 
+      let adfRaw = new Uint8Array(file?.data || "");
 
-router.post("/upload", upload.single("file"), (req, res) => {
-  const uploadedFileBuffer = req.file.buffer;
-	
-	//function here to process the file and return an object to do more stuff with it.
-	
-	
+      if (compareArray(adfRaw, "SAVE", 4)) {
+        adfRaw = adfRaw.slice(34); // TODO this is a hack to skip the header
+        adfRaw = inflate(adfRaw, { windowBits: -15 });
+      }
 
-  res.status(200).send("File uploaded successfully!");
+      if (compareArray(adfRaw, "\x01\x01\x00\x00\x00 FDA", 9)) {
+        adfRaw = adfRaw.slice(5);
+      }
+
+      if (compareArray(adfRaw, " FDA", 4)) {
+        const adfObject = adfProcess(adfRaw);
+        resultObject[fullPath] = adfObject;
+      } else {
+        resultObject[fullPath] = "UNKNOWN FORMAT";
+      }
+    }
+  }
+
+  res.status(200).json(resultObject);
 });
 
 module.exports = router;
